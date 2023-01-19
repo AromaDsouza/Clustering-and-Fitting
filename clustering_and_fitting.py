@@ -108,7 +108,7 @@ dataframe_uk=pd.DataFrame()  #To create dataframe for the UK
 dataframe_uk['year']=data_transpose['year']
 dataframe_uk['UK']=data_transpose['United Kingdom']
 #To plot, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
-plt.figure(dpi=144, figsize=(20,20))
+plt.figure(dpi = 144, figsize=(20,20))
 dataframe_uk.plot("year","UK")
 plt.show()
 
@@ -124,3 +124,24 @@ def exp(t, n0, g):
     f = n0 * np.exp(g*t)
     return f
 
+dataframe_uk["year"] = pd.to_numeric(dataframe_uk["year"])
+param, covar = opt.curve_fit(exp, dataframe_uk["year"], dataframe_uk["UK"],p0=(73233967692.102798, 0.03))
+dataframe_uk["fit"] = exp(dataframe_uk["year"], *param)
+dataframe_uk.plot("year", ["UK", "fit"])
+plt.show()
+
+#To check fitting for the United States with respect to year
+dataframe_usa=pd.DataFrame()  #To create a dataframe for the USA
+dataframe_usa['year']=data_transpose['year']
+dataframe_usa['Usa']=data_transpose['United States']
+#To plot, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
+plt.figure(dpi = 144, figsize=(20,20))
+dataframe_usa.plot("year","Usa")
+plt.show()
+
+dataframe_usa["year"] = pd.to_numeric(dataframe_usa["year"])
+param, covar = opt.curve_fit(exp, dataframe_usa["year"], dataframe_usa["Usa"],p0=(73233967692.102798, 0.03))
+
+dataframe_usa["fit"] = exp(dataframe_usa["year"], *param)
+dataframe_usa.plot("year", ["Usa", "fit"])
+plt.show()
