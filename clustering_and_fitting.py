@@ -104,12 +104,12 @@ data_transpose.reset_index(level=0, inplace=True)  #To reset the index values as
 data_transpose.rename(columns={'index':'year'}, inplace=True)  #To rename the column
 
 #To check fitting for the United Kingdom with respect to year
-df_uk=pd.DataFrame()  #To create dataframe for the UK
-df_uk['year']=data_transpose['year']
-df_uk['UK']=data_transpose['United Kingdom']
+dataframe_uk=pd.DataFrame()  #To create dataframe for the UK
+dataframe_uk['year']=data_transpose['year']
+dataframe_uk['UK']=data_transpose['United Kingdom']
 #To plot, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
 plt.figure(dpi=144, figsize=(20,20))
-df_uk.plot("year","UK")
+dataframe_uk.plot("year","UK")
 plt.show()
 
 #UK, USA and India are considered and compared
