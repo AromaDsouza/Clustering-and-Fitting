@@ -85,7 +85,7 @@ for inclusters in range(nclusters):
 plt.xlabel("Countries")
 plt.ylabel("Average")
 plt.title("Clustering")
-plt.savefig("plot1.png")  #To save the image
+plt.savefig("plot1.png")  #To save the image in png format
 plt.show()  #To display the image of the bar graph
 
 #To set up the encoded dataframe for country
