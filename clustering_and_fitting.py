@@ -66,7 +66,7 @@ nclusters=3
 kmeans=KMeans(n_clusters=nclusters)
 #To fit the data
 kmeans.fit(data_cluster)
-labels = kmeans.labels_ #Labels are the number of associated clusters of (x,y)points
+labels = kmeans.labels_  #Labels are the number of associated clusters of (x,y)points
 #To extract the estimated cluster centres
 cen = kmeans.cluster_centers_
 print(cen)
@@ -77,7 +77,7 @@ print(skmet.silhouette_score(data_cluster, labels))
 #To plot the clusters, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
 plt.figure(dpi=144, figsize=(10, 10))
 col = ["tab:blue", "tab:orange", "tab:green", "tab:red", "tab:purple", "tab:brown","tab:pink", "tab:gray", "tab:olive", "tab:cyan"]
-for l in range(nclusters): #Using loop over the different labels
+for l in range(nclusters):  #Using loop over the different labels
     plt.plot(data_cluster[labels==l]["country"], data_cluster[labels==l]["average"],"*", markersize=3, color=col[l])
 #To show the cluster centres
 for inclusters in range(nclusters):
@@ -95,7 +95,7 @@ data_encoded_countries
 
 #To fit and remove the unecessary columns
 dataframe.drop(['Country Code','continent','sub_region','average'],axis=1,inplace=True)
-data_transpose=dataframe.T #To transpose the dataframe
+data_transpose=dataframe.T  #To transpose the dataframe
 #To convert the rows into header column
 header_row = 0 
 data_transpose.columns = data_transpose.iloc[header_row]
@@ -113,7 +113,7 @@ plt.figure(dpi = 144, figsize=(20,20))
 dataframe_uk.plot("year","UK")
 plt.show()  #To display the image of the bar graph
 
-#UK, USA and India are considered and compared
+#UK, USA and India are considered to be compared
 
 def exp(t, n0, g):
     '''
@@ -196,4 +196,40 @@ plt.ylabel("UK")
 plt.legend()
 plt.show()  #To display the image of the bar graph
 
+#Forecasting till 2030 for United States Of America
+#Non-linear least squares to fit a function to data
+param, covar = opt.curve_fit(log, dataframe_usa["year"], dataframe_usa["Usa"],p0=(3e12, 0.03, 2000.0),maxfev=5000)
+sigma = np.sqrt(np.diag(covar))
+print("parameters:", param)
+print("std. dev.", sigma)
+dataframe_usa["fit"] = log(dataframe_usa["year"], *param)
+dataframe_usa.plot("year", ["Usa", "fit"])
+plt.show()  #To display the image of the bar graph
 
+year = np.arange(1992, 2031)
+forecast = log(year, *param)
+plt.figure()
+plt.plot(dataframe_usa["year"], dataframe_usa["Usa"], label="USA")
+plt.plot(year, forecast, label="Forecast")
+plt.xlabel("Year")
+plt.ylabel("Usa")
+plt.legend()
+plt.show()  #To display the image of the bar graph
+
+param, covar = opt.curve_fit(log, dataframe_india["year"], dataframe_india["india"],p0=(3e12, 0.03, 2000.0))
+sigma = np.sqrt(np.diag(covar))
+print("parameters:", param)
+print("std. dev.", sigma)
+dataframe_india["fit"] = log(dataframe_india["year"], *param)
+dataframe_india.plot("year", ["india", "fit"])
+plt.show()  #To display the image of the bar graph
+
+year = np.arange(1992, 2031)
+forecast = log(year, *param)
+plt.figure()
+plt.plot(dataframe_india["year"], dataframe_india["india"], label="India")
+plt.plot(year, forecast, label="Forecast")
+plt.xlabel("Year")
+plt.ylabel("India")
+plt.legend()
+plt.show()  #To display the image of the bar graph
