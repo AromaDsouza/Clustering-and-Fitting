@@ -85,7 +85,7 @@ for inclusters in range(nclusters):
 plt.xlabel("Countries")
 plt.ylabel("Average")
 plt.title("Clustering")
-plt.savefig("plot1.png")
+plt.savefig("plot1.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 #To set up the encoded dataframe for country
@@ -112,7 +112,7 @@ dataframe_uk['UK']=data_transpose['United Kingdom']
 #To plot, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
 plt.figure(dpi = 144, figsize=(20,20))
 dataframe_uk.plot("year","UK")
-plt.savefig("plot2.png")
+plt.savefig("plot2.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 #UK, USA and India are considered to be compared
@@ -131,7 +131,7 @@ dataframe_uk["year"] = pd.to_numeric(dataframe_uk["year"])
 param, covar = opt.curve_fit(exp, dataframe_uk["year"], dataframe_uk["UK"],p0=(73233967692.102798, 0.03))
 dataframe_uk["Fit"] = exp(dataframe_uk["year"], *param)
 dataframe_uk.plot("year", ["UK", "Fit"])
-plt.savefig("plot3.png")
+plt.savefig("plot3.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 #To check fitting for the United States with respect to year
@@ -141,7 +141,7 @@ dataframe_usa['Usa']=data_transpose['United States']
 #To plot, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
 plt.figure(dpi = 144, figsize=(20,20))
 dataframe_usa.plot("year","Usa")
-plt.savefig("plot4.png")
+plt.savefig("plot4.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 dataframe_usa["year"] = pd.to_numeric(dataframe_usa["year"])
@@ -149,7 +149,7 @@ param, covar = opt.curve_fit(exp, dataframe_usa["year"], dataframe_usa["Usa"],p0
 
 dataframe_usa["fit"] = exp(dataframe_usa["year"], *param)
 dataframe_usa.plot("year", ["Usa", "fit"])
-plt.savefig("plot5.png")
+plt.savefig("plot5.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 #To check fitting for the India with respect to year
@@ -159,7 +159,7 @@ dataframe_india['india']=data_transpose['India']
 #To plot, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
 plt.figure(figsize=(20,20))
 dataframe_india.plot("year","india")
-plt.savefig("plot6.png")
+plt.savefig("plot6.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 dataframe_india["year"] = pd.to_numeric(dataframe_india["year"])
@@ -167,7 +167,7 @@ param, covar = opt.curve_fit(exp, dataframe_india["year"], dataframe_india["indi
 
 dataframe_india["fit"] = exp(dataframe_india["year"], *param)
 dataframe_india.plot("year", ["india", "fit"])
-plt.savefig("plot7.png")
+plt.savefig("plot7.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 #Forecasting Future Years
@@ -191,7 +191,7 @@ print("parameters:", param)
 print("std. dev.", sigma)
 dataframe_uk["fit"] = log(dataframe_uk["year"], *param)
 dataframe_uk.plot("year", ["UK", "fit"])
-plt.savefig("plot8.png")
+plt.savefig("plot8.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 year = np.arange(1992, 2031)
@@ -201,8 +201,8 @@ plt.plot(dataframe_uk["year"], dataframe_uk["UK"], label="UK")
 plt.plot(year, forecast, label="Forecast")
 plt.xlabel("Year")
 plt.ylabel("UK")
-plt.legend()
-plt.savefig("plot9.png")
+plt.legend()  #Legend shows the label names in form of a box on the upper right hand of the image
+plt.savefig("plot9.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 #Forecasting till 2030 for United States Of America
@@ -213,7 +213,7 @@ print("parameters:", param)
 print("std. dev.", sigma)
 dataframe_usa["fit"] = log(dataframe_usa["year"], *param)
 dataframe_usa.plot("year", ["Usa", "fit"])
-plt.savefig("plot10.png")
+plt.savefig("plot10.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 year = np.arange(1992, 2031)
@@ -223,8 +223,8 @@ plt.plot(dataframe_usa["year"], dataframe_usa["Usa"], label="USA")
 plt.plot(year, forecast, label="Forecast")
 plt.xlabel("Year")
 plt.ylabel("Usa")
-plt.legend()
-plt.savefig("plot11.png")
+plt.legend()  #Legend shows the label names in form of a box on the upper right hand of the image
+plt.savefig("plot11.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 param, covar = opt.curve_fit(log, dataframe_india["year"], dataframe_india["india"],p0=(3e12, 0.03, 2000.0))
@@ -233,7 +233,7 @@ print("parameters:", param)
 print("std. dev.", sigma)
 dataframe_india["fit"] = log(dataframe_india["year"], *param)
 dataframe_india.plot("year", ["india", "fit"])
-plt.savefig("plot12.png")
+plt.savefig("plot12.png")  #To save the image
 plt.show()  #To display the image of the bar graph
 
 year = np.arange(1992, 2031)
@@ -243,6 +243,6 @@ plt.plot(dataframe_india["year"], dataframe_india["india"], label="India")
 plt.plot(year, forecast, label="Forecast")
 plt.xlabel("Year")
 plt.ylabel("India")
-plt.legend()
-plt.savefig("plot13.png")
+plt.legend()  #Legend shows the label names in form of a box on the upper right hand of the image
+plt.savefig("plot13.png")  #To save the image
 plt.show()  #To display the image of the bar graph
