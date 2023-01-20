@@ -12,6 +12,7 @@ from sklearn.cluster import KMeans
 import sklearn.metrics as skmet
 from sklearn import preprocessing
 import scipy.optimize as opt
+import plotly.express as px
 
 #To read the first dataset (in csv format) and print it
 gdp_data=pd.read_csv('gdp growth.csv')
@@ -84,7 +85,7 @@ for inclusters in range(nclusters):
     plt.plot(xc, yc, "dk", markersize=10)
 plt.xlabel("Countries")
 plt.ylabel("Average")
-plt.show()
+plt.show()  #To display the image of the bar graph
 
 #To set up the encoded dataframe for country
 data_encoded_countries=pd.DataFrame()
@@ -110,7 +111,7 @@ dataframe_uk['UK']=data_transpose['United Kingdom']
 #To plot, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
 plt.figure(dpi = 144, figsize=(20,20))
 dataframe_uk.plot("year","UK")
-plt.show()
+plt.show()  #To display the image of the bar graph
 
 #UK, USA and India are considered and compared
 
@@ -128,7 +129,7 @@ dataframe_uk["year"] = pd.to_numeric(dataframe_uk["year"])
 param, covar = opt.curve_fit(exp, dataframe_uk["year"], dataframe_uk["UK"],p0=(73233967692.102798, 0.03))
 dataframe_uk["fit"] = exp(dataframe_uk["year"], *param)
 dataframe_uk.plot("year", ["UK", "fit"])
-plt.show()
+plt.show()  #To display the image of the bar graph
 
 #To check fitting for the United States with respect to year
 dataframe_usa=pd.DataFrame()  #To create a dataframe for the USA
@@ -137,11 +138,62 @@ dataframe_usa['Usa']=data_transpose['United States']
 #To plot, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
 plt.figure(dpi = 144, figsize=(20,20))
 dataframe_usa.plot("year","Usa")
-plt.show()
+plt.show()  #To display the image of the bar graph
 
 dataframe_usa["year"] = pd.to_numeric(dataframe_usa["year"])
 param, covar = opt.curve_fit(exp, dataframe_usa["year"], dataframe_usa["Usa"],p0=(73233967692.102798, 0.03))
 
 dataframe_usa["fit"] = exp(dataframe_usa["year"], *param)
 dataframe_usa.plot("year", ["Usa", "fit"])
-plt.show()
+plt.show()  #To display the image of the bar graph
+
+#To check fitting for the India with respect to year
+dataframe_india=pd.DataFrame()  #To create a dataframe for India
+dataframe_india['year']=data_transpose['year']
+dataframe_india['india']=data_transpose['India']
+#To plot, set the figure size and dpi is dots per inch i.e to set the resolution of the image and to produce a clear image
+plt.figure(figsize=(20,20))
+dataframe_india.plot("year","india")
+plt.show()  #To display the image of the bar graph
+
+dataframe_india["year"] = pd.to_numeric(dataframe_india["year"])
+param, covar = opt.curve_fit(exp, dataframe_india["year"], dataframe_india["india"],p0=(73233967692.102798, 0.03))
+
+dataframe_india["fit"] = exp(dataframe_india["year"], *param)
+dataframe_india.plot("year", ["india", "fit"])
+plt.show()  #To display the image of the bar graph
+
+#Forecasting Future Years
+#For the countries UK,USA,India
+def log(t, n0, g, t0):
+    '''
+    The above function named log is to calculate the logistic function
+    n0: scale factor
+    g: growth rate
+    t: time
+    t0: estimated time
+    '''
+    f = n0 / (1 + np.exp(-g*(t - t0)))
+    return f
+
+#Forecasting till 2030 for United Kingdom
+#Non-linear least squares to fit a function to data.
+param, covar = opt.curve_fit(log, dataframe_uk["year"], dataframe_uk["UK"],p0=(3e12, 0.03, 2000.0))
+sigma = np.sqrt(np.diag(covar))  
+print("parameters:", param)
+print("std. dev.", sigma)
+dataframe_uk["fit"] = log(dataframe_uk["year"], *param)
+dataframe_uk.plot("year", ["UK", "fit"])
+plt.show()  #To display the image of the bar graph
+
+year = np.arange(1992, 2031)
+forecast = log(year, *param)
+plt.figure()
+plt.plot(dataframe_uk["year"], dataframe_uk["UK"], label="UK")
+plt.plot(year, forecast, label="Forecast")
+plt.xlabel("Year")
+plt.ylabel("UK")
+plt.legend()
+plt.show()  #To display the image of the bar graph
+
+
